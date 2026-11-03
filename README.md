@@ -1,95 +1,121 @@
-# SignBridge
+SignBridge 
+Sign language → text and speech, right in your browser.
 
-**Sign language → text and speech, right in your browser.**
 Free. No install. No account. No recording. Your video never leaves your device.
 
-SignBridge reads hand shapes through your webcam, turns them into words or letters,
-builds a sentence, and speaks it aloud. A second mode listens to the hearing person
-and shows large live captions, so both sides can talk.
+SignBridge reads hand shapes through your webcam, converts them into words or letters, builds a sentence, and speaks it aloud. It also features a second mode that listens to a hearing speaker and displays large live captions for two-way communication.
 
-## What makes it different
+What Makes It Different
+Feature	Why It Matters
+Runs 100% in Browser	
+Zero cost, zero setup, and works on any device with a webcam.
 
-| Feature | Why it matters |
-|---|---|
-| Runs 100% in the browser | Zero cost, zero setup, works on any laptop with a webcam |
-| Private by design | Only hand-point coordinates are processed, and nothing is stored or uploaded |
-| Two-way conversation | Signs become speech; speech becomes captions |
-| Words mode and Letters mode | One handshape can mean a word (Hello) or a letter (B) |
-| Live captions | The translation appears instantly over the video as you sign |
-| Hold-to-add | Hold a sign briefly to add it to the sentence; hold time is adjustable |
-| Rule-based, no dataset | Works instantly; every rule is readable and editable |
-| Built-in sign guide | Shows exactly how to form each supported sign |
+Private by Design	
+Processes only hand-point coordinates; zero video data stored or uploaded.
 
-## Try it
+Two-Way Communication	
+Translates signs to speech and converts spoken words into live captions.
 
-You need a webcam, and the page must be served over **https** or **localhost**
-(browsers block cameras on plain `file://` pages).
+Words & Letters Modes	
+Recognizes both whole-word gestures (e.g., Hello) and individual letters (e.g., B).
 
-**Option A — GitHub Pages (recommended, free):**
-1. Push this folder to a GitHub repository.
-2. Repo → **Settings** → **Pages** → Source: **Deploy from a branch** → Branch: **main** → folder **/ (root)** → **Save**.
-3. Open the link GitHub shows (`https://<your-username>.github.io/<repo>/`).
+Live Captions	
+Displays instant translations overlaid directly on the video feed.
 
-**Option B — on your computer:**
-```bash
+Hold-to-Add	
+Holds a sign briefly to append it to the active sentence (adjustable hold duration).
+
+Rule-Based Engine	
+Fast execution without external heavy datasets; every rule is human-readable and editable.
+
+Built-in Sign Guide	
+Includes an interactive visual guide showing how to form supported signs.
+
+Quick Start & Live Demo
+Note: Browsers require an HTTPS connection or localhost to access the camera (file:// protocol is blocked).
+
+Option A: GitHub Pages (Recommended)
+Push this repository to GitHub.
+
+Go to Settings → Pages.
+
+Under Source, select Deploy from a branch → set branch to main and folder to / (root) → Save.
+
+Launch your web app at https://<your-username>.github.io/<repo-name>/.
+
+Option B: Run Locally
+Bash
+# Clone the repository
+git clone https://github.com/jouzia/Signbridge.git
+cd Signbridge
+
+# Start a local HTTP server
 python -m http.server 8000
-# then open http://localhost:8000
-```
+Open http://localhost:8000 in your web browser.
 
-## How it works
+How It Works
+Plaintext
+Webcam Frame
+ └─ MediaPipe Hand Landmarker (21 keypoints per hand running in-browser)
+     └─ 01_gestures.js (Calculates relative finger distances & ratios)
+         └─ 02_app.js (Frame smoothing, hold-to-type validation, UI state)
+             └─ Web Speech API (Converts final sentence string to audio output)
+Finger states are evaluated using normalized coordinate ratios (distance relative to the wrist vs. knuckle height). This ensures reliable recognition regardless of hand size, distance from camera, or skin tone.
 
-```
-Webcam frame
-   └─ MediaPipe Hand Landmarker (21 points per hand, runs in-browser)
-        └─ 01_gestures.js  measures finger distances → picks a hand shape
-             └─ 02_app.js  smooths frames, waits for a steady hold, types it
-                  └─ Web Speech API  speaks the sentence
-```
+File Structure
+File	Purpose
+index.html	
+Application markup & structural layout.
 
-A finger counts as *straight* when its tip is far from the wrist compared with its knuckle,
-and as *folded* when it is close. Because this uses ratios between landmarks, it works
-for different hand sizes, distances and skin tones.
+style.css	
+Styling, theme, and responsive interface layout.
 
-## Project files
+01_gestures.js	
+Hand landmark rules, classifier, and shape dictionary.
 
-| File | Purpose |
-|---|---|
-| `index.html` | Page structure |
-| `style.css` | Look and layout |
-| `01_gestures.js` | Hand-shape rules and the sign table |
-| `02_app.js` | Camera, MediaPipe, sentence builder, speech |
+02_app.js	
+MediaPipe stream initialization, camera pipeline, hold logic, speech synthesis.
 
-## Supported signs (v1)
+Supported Signs (v1)
+Supports 16 static hand shapes based on common ASL fingerspelling and universally recognized signs:
 
-16 static hand shapes, based on widely used fingerspelling and common signs:
-Hello, Stop/B, I love you, Good/A, Bad, Yes/S, You/D, L, I, Call me/Y, Peace/V, Two/U,
-Water/W, OK/F, Zero/O, Cup/C.
+Words / Gestures: Hello, Stop/B, I love you, Good/A, Bad, Yes/S, You/D, Call me/Y, Peace/V, Two/U, Water/W, OK/F, Zero/O, Cup/C, L, I.
 
-## Add your own sign
+Adding Custom Signs
+Open the app, activate Developer view, and perform your desired hand gesture to inspect current finger coordinates.
 
-1. Open the page, tick **Developer view**, and make the shape. You'll see each finger's state.
-2. In `01_gestures.js`, add an entry to `SHAPES` and a rule in `classify()`.
-3. Reload. The on-screen guide updates automatically.
+Open 01_gestures.js.
 
-## Honest limits
+Add a new target entry into SHAPES and declare your evaluation condition in classify().
 
-- Version 1 recognises **static hand shapes**, not full sentences or moving signs.
-  Real sign languages also use motion, facial expression and both hands.
-- Sign languages differ by country. The shapes here follow common ASL fingerspelling and widely understood signs.
-- Letters that depend on motion (J, Z) or finger crossing (R, K) are not included yet.
-- Speech captions use the browser's speech recognition, which works best in Chrome and Edge.
+Reload the page; the interactive on-screen sign guide will update automatically.
 
-## Roadmap
+Limitations
+Static Gestures: Version 1 detects static hand shapes rather than continuous motion signs or facial expressions.
 
-- Motion signs (wave for Hello, Please, Thank you) using landmark trajectories
-- Two-hand signs
-- More languages through community-contributed sign tables
-- Small neural classifier trained on public datasets to improve accuracy
+Regional Variations: Hand shapes currently mirror standard American Sign Language (ASL) fingerspelling.
 
-## Tech
+Complex Movement: Motion-dependent letters (e.g., J, Z) and intersecting finger signs (e.g., R, K) are excluded in the current release.
 
-MediaPipe Tasks Vision (Hand Landmarker) · JavaScript (ES modules) · Web Speech API · GitHub Pages
+Browser Compatibility: Speech-to-text recognition relies on the Web Speech API (best supported on Google Chrome and Microsoft Edge).
 
-## License
+Roadmap
+[ ] Dynamic motion gesture recognition (wave for Hello, Please, Thank You).
 
-MIT — free to use, change and share.
+[ ] Dual-hand landmark tracking.
+
+[ ] Multi-language sign tables.
+
+[ ] Lightweight custom ML classifier integration.
+
+Tech Stack
+Computer Vision: MediaPipe Tasks Vision (Hand Landmarker)
+
+Language & Core: JavaScript (ES Modules), HTML5, CSS3
+
+Browser APIs: Web Speech API (SpeechSynthesis & SpeechRecognition), MediaDevices API
+
+Hosting: GitHub Pages
+
+License
+This project is licensed under the MIT License — free to use, modify, and distribute.
