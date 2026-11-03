@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SignBridge – Sign language to text and speech</title>
+  <meta name="description" content="Free, private, in-browser sign language translator. No install, no recording." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="top">
+  <h1>SignBridge</h1>
+  <p>Show a sign. It becomes text and speech. Nothing is recorded.</p>
+</header>
+
+<main class="layout">
+
+  <!-- LEFT: camera -->
+  <section class="stage" aria-label="Camera">
+    <div class="video-wrap">
+      <video id="video" playsinline muted></video>
+      <canvas id="overlay"></canvas>
+      <div class="hint-empty">Camera is off</div>
+      <div id="liveCaption" class="live-caption" aria-live="polite"></div>
+    </div>
+    <div class="row">
+      <button id="startBtn" class="primary">Start camera</button>
+      <p id="status" role="status">Press Start camera, then allow access.</p>
+    </div>
+
+    <fieldset class="modes">
+      <legend>Mode</legend>
+      <label><input type="radio" name="mode" value="words" checked /> Words</label>
+      <label><input type="radio" name="mode" value="letters" /> Letters</label>
+    </fieldset>
+
+    <label class="slider">
+      Hold a sign for <strong id="holdVal">0.5 s</strong> to add it to the sentence
+      <input id="holdSlider" type="range" min="200" max="2000" step="100" value="500" />
+    </label>
+  </section>
+
+  <!-- RIGHT: result -->
+  <section class="result" aria-label="Translation">
+    <div class="readout-card">
+      <div id="ring" class="ring" style="--p:0">
+        <span id="readout">…</span>
+      </div>
+      <p id="readoutSub" class="sub">No sign</p>
+    </div>
+
+    <div id="sentence" class="sentence empty" aria-live="polite"></div>
+
+    <div class="row wrap">
+      <button id="speakBtn" class="primary">Speak</button>
+      <button id="spaceBtn">Space</button>
+      <button id="backBtn">Delete last</button>
+      <button id="copyBtn">Copy</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+    <label class="check"><input id="autoSpeak" type="checkbox" /> Speak each sign as it is typed</label>
+
+    <div class="talk">
+      <h2>Two-way conversation</h2>
+      <p class="muted">The other person speaks; their words appear here as captions.</p>
+      <button id="listenBtn">Start listening</button>
+      <div id="captions" class="captions empty" aria-live="polite">Captions appear here</div>
+    </div>
+  </section>
+</main>
+
+<section class="guide-sec">
+  <h2>Signs it understands</h2>
+  <p class="muted">Hold your hand clearly in front of the camera, palm facing it, with good light.</p>
+  <div class="guide-head"><span>Word</span><span>Letter</span><span>How to make it</span></div>
+  <ul id="guide" class="guide"></ul>
+</section>
+
+<footer>
+  <label class="check"><input id="debug" type="checkbox" /> Developer view</label>
+  <div id="debugPanel" hidden><pre id="debugOut">…</pre></div>
+  <p class="muted">Video is processed on your device and never uploaded or saved. Works best in Chrome or Edge.</p>
+</footer>
+
+<script type="module" src="02_app.js"></script>
+</body>
+</html>
