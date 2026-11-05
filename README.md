@@ -9,7 +9,7 @@
 ##  Creators & Team
 * **Shaik Jouzia Afreen H** 
 * **Mufidah Mehnaz MZ** 
-* **Santhorhini T** 
+* **Santhoshini T** 
 
 ---
 
