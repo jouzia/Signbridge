@@ -1,4 +1,4 @@
-```markdown
+
 #  SignBridge: Real-Time Sign Language to Text & Speech Translator
 
 > **Submission Topic:** Future Tech: FT-04 - Sign Language to Text/Speech Translator  
