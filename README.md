@@ -1,7 +1,3 @@
-Here is a professional, comprehensive, and polished `README.md` file tailored specifically for your **SignBridge** repository. It highlights the dual frontend (PWA web app) and backend (Python) architecture, the submission details, and your team credits.
-
----
-
 ```markdown
 #  SignBridge: Real-Time Sign Language to Text & Speech Translator
 
