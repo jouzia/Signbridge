@@ -7,9 +7,9 @@
 ---
 
 ##  Creators & Team
-* **Shaik Jouzia Afreen H** (Lead Developer & Computer Vision Architecture)[cite: 4]
-* **Mufidah Mehnaz MZ** (UI/UX Design & Speech Engine Integration)[cite: 4]
-* **Santhorhini T** (Feature Testing, Gesture Rule Logic & QA)[cite: 4]
+* **Shaik Jouzia Afreen H** 
+* **Mufidah Mehnaz MZ** 
+* **Santhorhini T** 
 
 ---
 
