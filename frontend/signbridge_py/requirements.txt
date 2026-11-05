@@ -1,0 +1,9 @@
+# Core (required)
+opencv-python==4.10.0.84
+mediapipe==0.10.14
+numpy<2
+pyttsx3
+
+# Optional: lets the other person's voice appear as captions (press L).
+# Install these only if you want that feature:
+#   pip install SpeechRecognition PyAudio
